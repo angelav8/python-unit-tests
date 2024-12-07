@@ -1,6 +1,6 @@
 # Azure Pipeline for Databricks Unit Tests and Deployment
 
-This tutorial guides you through setting up an Azure Pipeline to run Databricks unit tests and automatically deploy to production if the tests are successful.
+This tutorial guides you through setting up an Azure Pipeline to run Databricks unit tests in a dev environment and automatically triggering a deployment to production if the tests are successful.
 
 ## Table of Contents
 
