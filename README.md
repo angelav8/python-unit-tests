@@ -52,6 +52,8 @@ class CustomTestRunner(unittest.TextTestRunner):
 if __name__ == '__main__':
     unittest.main(testRunner=CustomTestRunner())```
 
+<br>
+
 
 ## Step 2: Create Azure Pipeline Configuration File
 
