@@ -93,8 +93,8 @@ jobs:
       inlineScript: |
         echo "Deploying to production..."
         # Add your production deployment script here
-    condition: succeeded()```
-
+    condition: succeeded()
+```
     ### Explanation
 
 1. **Trigger**: Specifies the branch to trigger the pipeline (e.g., `main`).
