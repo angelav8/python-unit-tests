@@ -11,9 +11,9 @@ This tutorial guides you through setting up an Azure Pipeline to run Databricks 
 4. [Step 3: Set Up Azure DevOps Project](#step-3-set-up-azure-devops-project)
 5. [Step 4: Verify and Deploy](#step-4-verify-and-deploy)
 
-## Step 1: Create Your Unit Test File
+## Step 1: Create Your Unit Test
 
-Ensure you have your unit test file (`security_egress_firewall_test.py`) ready. Here is the code:
+Code I used: 
 
 ```
 import unittest
