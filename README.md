@@ -37,7 +37,7 @@ def get_ip_address(workspace_url):
 
 class TestDatabricksWorkspaceIP(unittest.TestCase):
     def test_workspace_ip(self):
-        workspace_url = 'https://ifconfig.me/all.json'  # Example URL to get IP address
+        workspace_url = 'DATABRICKS WORKSPACE URL HERE'  # Example URL to get IP address
         ip = get_ip_address(workspace_url)
         print(f"Databricks Workspace IP: {ip}")
         self.assertTrue(is_public_ip(ip), f"{ip} should be public")
