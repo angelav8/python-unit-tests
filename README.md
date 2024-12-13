@@ -4,12 +4,11 @@ This tutorial guides you through setting up an Azure Pipeline to run Databricks 
 
 ## Table of Contents
 
-1. [Prerequisites](#prerequisites)
-2. [Step 1: Create Your Unit Test File](#step-1-create-your-unit-test-file)
-3. [Step 2: Create Azure Pipeline Configuration File](#step-2-create-azure-pipeline-configuration-file)
+1. [Step 1: Create Your Unit Test File](#step-1-create-your-unit-test-file)
+1. [Step 2: Create Azure Pipeline Configuration File](#step-2-create-azure-pipeline-configuration-file)
    - [Explanation](#explanation)
-4. [Step 3: Set Up Azure DevOps Project](#step-3-set-up-azure-devops-project)
-5. [Step 4: Verify and Deploy](#step-4-verify-and-deploy)
+1. [Step 3: Set Up Azure DevOps Project](#step-3-set-up-azure-devops-project)
+1. [Step 4: Verify and Deploy](#step-4-verify-and-deploy)
 
 ## Step 1: Create Your Unit Test
 
