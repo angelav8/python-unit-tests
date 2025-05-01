@@ -13,6 +13,17 @@ This tutorial guides you through setting up an Azure Pipeline to run Databricks 
 ## Step 1: Create Your Unit Test
 
 Example code included in [Templates/](Templates/)
+Tests included: 
+
+- python_Syntax_test.py 
+  - Pass in a databricks notebook file and this will check the syntax of a databricks notebook
+- security_egress_firewall_test.py
+ - This will check if the IP of your databricks workspace is public facing
+- sql_syntax_test.py
+ - A simple syntax test, pass in SQL to check syntax 
+- test_databricks_creation.py
+ - Verify the successful creation and properties of the Databricks workspace. 
+ - Set environment variables (RESOURCE_GROUP_NAME, DATABRICKS_WORKSPACE_NAME, SUBSCRIPTION_ID) in your Azure Pipeline configuration
 
 ## Step 2: Create Azure Pipeline Configuration File
 
