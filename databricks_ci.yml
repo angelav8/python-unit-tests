@@ -2,6 +2,19 @@ trigger:
 - main
 - develop
 
+#For sensitive information like API tokens or passwords, 
+#it's highly recommended to use secret variables.
+# You define these in the Azure Pipelines UI (Pipeline settings -> Variables) 
+#and they are securely stored and masked in the logs.
+#In your YAML, you can reference them like regular variables using the $(variable-name) syntax.
+
+variables:
+  RESOURCE_GROUP_NAME: 'your-resource-group-name'
+  DATABRICKS_WORKSPACE_NAME: 'your-databricks-workspace-name'
+  SUBSCRIPTION_ID: 'your-azure-subscription-id'
+  DATABRICKS_HOST: 'https://your-workspace.azuredatabricks.net'
+  DATABRICKS_TOKEN: '$(databricksToken)' # 'databricksToken' would be defined as a secret variable in the UI
+
 pool:
   vmImage: 'ubuntu-latest'
 
