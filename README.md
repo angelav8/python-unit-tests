@@ -12,7 +12,7 @@ This tutorial guides you through setting up an Azure Pipeline to run Databricks 
 
 ## Step 1: Create Your Unit Test
 
-Example code included in [Templates/](Templates/)
+Example code included in [tests/](tests/)
 Tests included: 
 
 - python_Syntax_test.py 
