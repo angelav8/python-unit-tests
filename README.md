@@ -61,38 +61,41 @@ Create an `azure-pipelines.yml` file in the root of your repository. This file w
 ```
 trigger:
 - main
+- develop
 
 pool:
   vmImage: 'ubuntu-latest'
 
-jobs:
-- job: TestAndDeploy
-  displayName: 'Test and Deploy Job'
-  steps:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.x'
-      addToPath: true
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+  displayName: 'Use Python 3.x'
 
-  - script: |
-      python -m pip install --upgrade pip
-      pip install -r requirements.txt
-    displayName: 'Install dependencies'
+- task: PipToolInstaller@0
+  inputs:
+    versionSpec: 'latest'
+  displayName: 'Install Pip'
 
-  - script: |
-      python -m unittest discover -s . -p 'security_egress_firewall_test.py'
-    displayName: 'Run unit tests'
+- task: Pip@0
+  inputs:
+    pipPackage: '-r requirements.txt'
+  displayName: 'Install Python Dependencies'
 
-  - task: AzureCLI@2
-    displayName: 'Deploy to Production'
-    inputs:
-      azureSubscription: '<Your Azure Subscription>'
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
-      inlineScript: |
-        echo "Deploying to production..."
-        # Add your production deployment script here
-    condition: succeeded()
+- task: PythonTestRunner@0
+  inputs:
+    testWorkingDirectory: 'tests/' 
+    pytestArgs: ''
+    resultsFile: 'test-results.xml'
+  displayName: 'Run Pytest Integration Tests'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'pytest'
+    testResultsFiles: 'test-results.xml'
+    publishRunAttachments: true
+  condition: succeededOrFailed()
+  displayName: 'Publish Test Results'
 ```
     ### Explanation
 

@@ -1,0 +1,37 @@
+trigger:
+- main
+- develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+  displayName: 'Use Python 3.x'
+
+- task: PipToolInstaller@0
+  inputs:
+    versionSpec: 'latest'
+  displayName: 'Install Pip'
+
+- task: Pip@0
+  inputs:
+    pipPackage: '-r requirements.txt'
+  displayName: 'Install Python Dependencies'
+
+- task: PythonTestRunner@0
+  inputs:
+    testWorkingDirectory: 'tests/' 
+    pytestArgs: ''
+    resultsFile: 'test-results.xml'
+  displayName: 'Run Pytest Integration Tests'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'pytest'
+    testResultsFiles: 'test-results.xml'
+    publishRunAttachments: true
+  condition: succeededOrFailed()
+  displayName: 'Publish Test Results'
