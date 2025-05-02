@@ -68,7 +68,8 @@ steps:
   condition: succeededOrFailed()
   displayName: 'Publish Test Results'
 ```
-    ### Explanation
+
+   ## Explanation
 
 1. **Trigger**: Specifies the branch to trigger the pipeline (e.g., `main`).
 2. **Pool**: Defines the virtual machine image to use (e.g., `ubuntu-latest`).
