@@ -7,11 +7,11 @@ def test_databricks_cluster_status(host, token, cluster_id, org_id, port):
     Integration test to check the status of a Databricks cluster.
 
     Args:
-        host (str): The Databricks workspace host (e.g., https://your-workspace.azuredatabricks.net).
+        host (str): The Databricks workspace host.
         token (str): A Databricks personal access token.
         cluster_id (str): The ID of the Databricks cluster to check.
         org_id (str): The Databricks organization ID.
-        port (str): The port number for the Databricks API (typically '443' for HTTPS).
+        port (str): The port number for the Databricks API.
 
     Returns:
         bool: True if the cluster is running, False otherwise.
@@ -23,7 +23,7 @@ def test_databricks_cluster_status(host, token, cluster_id, org_id, port):
 
     try:
         response = requests.get(endpoint, headers=headers, params=params, verify=True)
-        response.raise_for_status()  # Raise an exception for bad status codes
+        response.raise_for_status()
         cluster_info = response.json()
         cluster_state = cluster_info.get("state")
         print(f"Cluster ID: {cluster_id}, Current State: {cluster_state}")
@@ -39,18 +39,15 @@ def test_databricks_cluster_status(host, token, cluster_id, org_id, port):
         return False
 
 if __name__ == "__main__":
-    # These would typically come from your CI/CD pipeline variables or environment variables
-    databricks_host = os.environ.get("DATABRICKS_HOST")
-    databricks_token = os.environ.get("DATABRICKS_TOKEN")
-    target_cluster_id = os.environ.get("DATABRICKS_CLUSTER_ID")
-    databricks_org_id = os.environ.get("DATABRICKS_ORG_ID")
-    databricks_port = os.environ.get("DATABRICKS_PORT", "443")
+    # Setting explicit values directly here:
+    databricks_host = "your-databricks-host.azuredatabricks.net"
+    databricks_token = "your-databricks-personal-access-token"
+    target_cluster_id = "your-cluster-id"
+    databricks_org_id = "your-databricks-org-id"
+    databricks_port = "443"
 
-    if not all([databricks_host, databricks_token, target_cluster_id, databricks_org_id]):
-        print("Error: Please set the DATABRICKS_HOST, DATABRICKS_TOKEN, DATABRICKS_CLUSTER_ID, and DATABRICKS_ORG_ID environment variables.")
+    if test_databricks_cluster_status(databricks_host, databricks_token, target_cluster_id, databricks_org_id, databricks_port):
+        print(f"Integration test passed: Cluster '{target_cluster_id}' is running.")
     else:
-        if test_databricks_cluster_status(databricks_host, databricks_token, target_cluster_id, databricks_org_id, databricks_port):
-            print(f"Integration test passed: Cluster '{target_cluster_id}' is running.")
-        else:
-            print(f"Integration test failed: Cluster '{target_cluster_id}' is not running.")
-            exit(1) # Exit with a non-zero code to indicate failure in the pipeline
+        print(f"Integration test failed: Cluster '{target_cluster_id}' is not running.")
+        exit(1)
