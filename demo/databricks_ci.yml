@@ -2,11 +2,11 @@ trigger:
 - main
 - develop
 
-#For sensitive information like API tokens or passwords, 
-#it's highly recommended to use secret variables.
+# for sensitive information like API tokens or passwords, 
+# it's highly recommended to use secret variables.
 # You define these in the Azure Pipelines UI (Pipeline settings -> Variables) 
-#and they are securely stored and masked in the logs.
-#In your YAML, you can reference them like regular variables using the $(variable-name) syntax.
+# and they are securely stored and masked in the logs.
+# In your YAML, you can reference them like regular variables using the $(variable-name) syntax.
 
 variables:
   RESOURCE_GROUP_NAME: 'your-resource-group-name'

@@ -11,7 +11,7 @@ This tutorial guides you through setting up an Azure Pipeline which triggers int
 
 ## Step 1: Create Your Unit Test File
 
-Example code included in [tests/](tests/)
+Example code included in [demo/tests/](tests/)
 Tests included: 
 
 - python_Syntax_test.py 
