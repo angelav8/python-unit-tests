@@ -9,7 +9,7 @@ This tutorial guides you through setting up an Azure Pipeline which triggers int
 1. [Step 3: Set Up Azure DevOps Project](#step-3-set-up-azure-devops-project)
 1. [Step 4: Verify and Deploy](#step-4-verify-and-deploy)
 
-## Step 1: Create Your Unit Test File
+## Step 1: Create a Unit Test File
 
 Example code included in [demo/tests/](tests/)
 Tests included: 
