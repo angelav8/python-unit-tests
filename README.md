@@ -1,16 +1,15 @@
-# Azure Pipeline for Databricks Unit Tests and Deployment
+# Getting started with Integration tests for Databricks CI/CD
 
-This tutorial guides you through setting up an Azure Pipeline to run Databricks unit tests and automatically triggering a deployment to production if the tests are successful.
+This tutorial guides you through setting up an Azure Pipeline which triggers integration tests in python for databricks. this setup can also be used for unit testsing or integration testing any python project. 
 
 ## Table of Contents
 
 1. [Step 1: Create Your Unit Test File](#step-1-create-your-unit-test-file)
 1. [Step 2: Create Azure Pipeline Configuration File](#step-2-create-azure-pipeline-configuration-file)
-   - [Explanation](#explanation)
 1. [Step 3: Set Up Azure DevOps Project](#step-3-set-up-azure-devops-project)
 1. [Step 4: Verify and Deploy](#step-4-verify-and-deploy)
 
-## Step 1: Create Your Unit Test
+## Step 1: Create Your Unit Test File
 
 Example code included in [tests/](tests/)
 Tests included: 
@@ -27,65 +26,52 @@ Tests included:
 
 ## Step 2: Create Azure Pipeline Configuration File
 
-Create an `azure-pipelines.yml` file in the root of your repository. This file will define the steps to set up the environment, run the tests, and trigger the production deployment.
+Create an Azure pipelines CI configuration file, within this file you should have the below tasks 
 
 ```
-trigger:
-- main
-- develop
-
-pool:
-  vmImage: 'ubuntu-latest'
-
+#Install python 
 steps:
 - task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.x'
   displayName: 'Use Python 3.x'
-
-- task: PipToolInstaller@0
   inputs:
-    versionSpec: 'latest'
-  displayName: 'Install Pip'
+      versionSpec: 3.x
 
-- task: Pip@0
-  inputs:
-    pipPackage: '-r requirements.txt'
-  displayName: 'Install Python Dependencies'
+# Install pytest and any other dependancies
+- script: |
+   pip install pytest
+ displayName: 'Install pytest'
 
-- task: PythonTestRunner@0
-  inputs:
-    testWorkingDirectory: 'tests/' 
-    pytestArgs: ''
-    resultsFile: 'test-results.xml'
+
+# The below block creates a folder for the logs to sit on 
+# Runs pytests in a tests/ folder 
+# Outputs the test results in a XML file using azures predefined variables
+# the || true condition will pass to the next task even if the python tests fail
+# We proceed to the next task even though the tests fail to publish the test results
+- script: |
+   mkdir -p $(Build.Repository.LocalPath)/logs
+   python -m pytest tests/ --junitXML=$(Build.Repository.LocalPath)/logs/test-results.xml || true
   displayName: 'Run Pytest Integration Tests'
 
+
+# This Azure pipelines task publishes the test results
+# This allows you to visulise the reports and dashboards related to testing
+# This task will fail if the tests fail 
 - task: PublishTestResults@2
   inputs:
-    testResultsFormat: 'pytest'
-    testResultsFiles: 'test-results.xml'
+    testResultsFiles: 'test-*.xml'
     publishRunAttachments: true
-  condition: succeededOrFailed()
+    failTaskOnFailedTests: true
   displayName: 'Publish Test Results'
 ```
 
-   ## Explanation
-
-1. **Trigger**: Specifies the branch to trigger the pipeline (e.g., `main`).
-2. **Pool**: Defines the virtual machine image to use (e.g., `ubuntu-latest`).
-3. **Jobs**: Defines a job named `TestAndDeploy`.
-4. **Steps**:
-   - **UsePythonVersion**: Sets up the Python version.
-   - **Install dependencies**: Installs the required dependencies from `requirements.txt`.
-   - **Run unit tests**: Runs the unit tests using `unittest`.
-   - **Deploy to Production**: Deploys to production if the tests are successful. Replace `<Your Azure Subscription>` with your actual Azure subscription ID and add your production deployment script.
-
+  
    ## Step 3: Set Up Azure DevOps Project
 
 1. **Create a new project**: Go to Azure DevOps and create a new project.
-2. **Create a new pipeline**: Navigate to Pipelines > Create Pipeline.
-3. **Connect to your repository**: Select your repository where the `azure-pipelines.yml` file is located.
-4. **Run the pipeline**: Save and run the pipeline.
+2. **Import/Upload the demo project** Change variables to suit your own configuration 
+3. **Create a new pipeline**: Navigate to Pipelines > Create Pipeline.
+4. **Connect to your repository**: Select your repository where the `azure-pipelines.yml` file is located.
+5. **Run the pipeline**: Save and run the pipeline.
 
 ## Step 4: Verify and Deploy
 
