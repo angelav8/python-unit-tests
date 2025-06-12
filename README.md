@@ -1,6 +1,6 @@
 # Getting started with Integration tests for Databricks CI/CD
 
-This tutorial guides you through setting up an Azure Pipeline which triggers integration tests in python for databricks. This setup can also be used for unit testsing or integration testing any python project. 
+This tutorial guides you through setting up an Azure Pipeline which triggers integration tests in python for databricks. This setup can also be used for unit testing or integration testing any python project. 
 
 ## Table of Contents
 
